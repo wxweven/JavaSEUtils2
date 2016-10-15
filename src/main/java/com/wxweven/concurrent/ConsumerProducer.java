@@ -1,90 +1,141 @@
 package com.wxweven.concurrent;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
- * 
+ * Java 版 消费者和生产者
+ *
  * @author wxweven
  * @date 2014年9月10日
  * @version 1.0
- * @email wxweven@163.com
- * @blog http://wxweven.blog.163.com/
- * @Copyright: Copyright (c) wxweven 2014
- * @Description: Java 版 消费者和生产者
+ * @email wxweven@qq.com
+ * @blog wxweven.com
+ * @Copyright: Copyright (c) wxweven 2009 - 2016
  */
 public class ConsumerProducer {
+	private static final int	QUEUE_SIZE	= 1;					// 定义缓冲队列的长度
+	private Queue<Integer>		queue		= new LinkedList<>();	// 缓冲队列
 
-	private String message; // 消息内容
-	private boolean hasMesg; // 标识符，缓冲区是否有内容
+	private Lock				lock		= new ReentrantLock();
+	private Condition			condition	= lock.newCondition();
 
 	public static void main(String[] args) {
-		final ConsumerProducer cp = new ConsumerProducer();
+		ConsumerProducer consumerProducer = new ConsumerProducer();
 
-		// 定义生产者线程
-		Thread producerThread = new Thread(new Runnable() {
+		// 消费者线程
+		// ConsumerWaitNotify consumer = consumerProducer.new
+		// ConsumerWaitNotify();
+		ConsumerCondition consumer = consumerProducer.new ConsumerCondition();
+		consumer.start();
 
-			@Override
-			public void run() {
-				System.out.println("Producer thread started...");
-				for (int i = 1; i <= 3; ++i) {
-					cp.produceMsg("msg" + i);
+		// 生产者线程
+		ProducerCondition producer = consumerProducer.new ProducerCondition();
+		producer.start();
+
+	}
+
+	/**
+	 * condition 定义生产者线程
+	 */
+	class ProducerCondition extends Thread {
+		@Override
+		public void run() {
+			while (true) {
+				lock.lock();
+				try {
+					while (queue.size() == QUEUE_SIZE) {
+						condition.await();
+					}
+
+					queue.add(1);// 队列不为满，继续生产
+					System.out.println("生产者生产了一条数据...");
+					condition.signal();// 唤醒消费者线程
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} finally {
+					lock.unlock();
 				}
 			}
-		});
+		}
+	}
 
-		// 定义生产者线程
-		Thread consumerThread = new Thread(new Runnable() {
+	/**
+	 * condition 定义消费者线程
+	 */
+	class ConsumerCondition extends Thread {
+		@Override
+		public void run() {
+			while (true) {
+				lock.lock();
+				try {
+					while (queue.size() == 0) {
+						condition.await();
+					}
 
-			@Override
-			public void run() {
-				System.out.println("Consumer thread started...");
-				for (int i = 1; i <= 10; ++i) {
-					cp.consumeMsg();
+					queue.poll();// 队列不为空，继续消费
+					System.out.println("消费者消费了一条数据...");
+					condition.signal();// 唤醒生产者线程
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} finally {
+					lock.unlock();
 				}
 			}
-		});
-
-		producerThread.start();
-		consumerThread.start();
+		}
 	}
 
-	/** 生产者 */
-	public synchronized void produceMsg(String msg) {
-		while (hasMesg) {
-			// 缓冲区是满的，生产者 wait
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+	/**
+	 * wait nofity 定义生产者线程
+	 */
+	class ProducerWaitNotify extends Thread {
+		@Override
+		public void run() {
+			while (true) {
+				synchronized (queue) {
+					while (queue.size() == QUEUE_SIZE) {
+						// 队列为满，阻塞生产者线程
+						try {
+							queue.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+
+					queue.add(1);// 队列不为满，继续生产
+					System.out.println("生产者生产了一条数据...");
+					queue.notify();// 唤醒消费者线程
+				}
 			}
 		}
-
-		// 缓冲区有空间，生产者开始生产
-		this.message = msg;
-		System.out.println(msg + " Put @ " + System.nanoTime());
-
-		hasMesg = true;// 置标志位为true，表示缓冲区满
-
-		notify();// 唤醒其他线程，这里是唤醒消费者，开始从缓冲区取数据
 	}
 
-	/** 消费者 */
-	public synchronized String consumeMsg() {
-		String getMsg = "";
-		while (!hasMesg) {
-			// 缓冲区是空的，消费者wait
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+	/**
+	 * wait nofity 定义消费者线程
+	 */
+	class ConsumerWaitNotify extends Thread {
+		@Override
+		public void run() {
+			while (true) {
+				synchronized (queue) {
+					while (queue.size() == 0) {
+						// 队列为空，阻塞消费者线程
+						try {
+							queue.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+
+					queue.poll();// 队列不为空，继续消费
+					System.out.println("消费者消费了一条数据...");
+					queue.notify();// 唤醒生产者线程
+				}
 			}
 		}
-
-		// 缓冲区有数据，消费者开始工作
-		getMsg = this.message;
-		System.out.println(getMsg + " Get @" + System.nanoTime());
-		hasMesg = false;// 置标志位为false，表示缓冲区空
-
-		notify();// 唤醒其他线程，这里是唤醒生产者，开始写数据到缓冲区
-
-		return getMsg;
 	}
+
 }

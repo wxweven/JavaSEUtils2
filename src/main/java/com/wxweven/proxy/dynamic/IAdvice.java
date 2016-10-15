@@ -1,9 +1,7 @@
 /**
- * 
+ *
  */
 package com.wxweven.proxy.dynamic;
-
-import java.lang.reflect.Method;
 
 /**
  * @author wxweven
@@ -12,10 +10,10 @@ import java.lang.reflect.Method;
  * @email wxweven@163.com
  * @blog http://wxweven.blog.163.com/
  * @Copyright: Copyright (c) wxweven 2014
- * @Description: 
+ * @Description:
  */
 public interface IAdvice {
 	void beforeMethod(String str);
-	
+
 	void afterMethod(String str);
 }
