@@ -4,6 +4,9 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 利用 condition 来实现生产者消费者
  *
@@ -14,11 +17,13 @@ import java.util.concurrent.locks.ReentrantLock;
  * @blog wxweven.com
  * @Copyright: Copyright (c) wxweven 2009 - 2016
  */
-public class ConditionPC {
+public class ProducerConsumerCondition {
 
+    private static Logger    logger            = LoggerFactory.getLogger(ProducerConsumerCondition.class);
     private static final int CONSUMER_NUMBER   = 10;
     private static final int PRODUCER_NUMBER   = 5;
 
+    // 标识是否有产品，初始为false
     private static boolean   flag              = false;
     private static Lock      lock              = new ReentrantLock();
 
@@ -47,25 +52,25 @@ public class ConditionPC {
     /**
      * 消费者线程
      */
-    static class Consumer implements Runnable {
+    private static class Consumer implements Runnable {
 
         @Override
         public void run() {
             // 消费者不停地消费
             while (true) {
-                lock.lock();
+                lock.lock(); // 加锁控制
                 try {
                     if (!hasProduct()) {
                         // 没有产品，消费者阻塞
                         consumerCondition.await();
-                        System.out.println(Thread.currentThread().getName() + "被唤醒了");
+                        logger.debug(Thread.currentThread().getName() + "被唤醒了");
                     }
 
                     // 唤醒后，消费者继续消费
                     // 模拟消费者行为
                     Thread.sleep(300);
                     flag = false;
-                    System.out.println(Thread.currentThread().getName() + ": 消费了一个产品");
+                    logger.debug(Thread.currentThread().getName() + ": 消费了一个产品");
 
                     producerCondition.signal();// 唤醒生产者
                 } catch (InterruptedException e) {
@@ -94,12 +99,12 @@ public class ConditionPC {
                         producerCondition.await();
                     }
 
-                    System.out.println(Thread.currentThread().getName() + "被唤醒了");
+                    logger.debug(Thread.currentThread().getName() + "被唤醒了");
                     // 被唤醒后，生产者继续生产
                     // 模拟生产者行为
                     Thread.sleep(500);
                     flag = true; // 标记有产品
-                    System.out.println(Thread.currentThread().getName() + ": 生产了一个产品");
+                    logger.debug(Thread.currentThread().getName() + ": 生产了一个产品");
 
                     consumerCondition.signal();// 唤醒消费者
                 } catch (InterruptedException e) {
