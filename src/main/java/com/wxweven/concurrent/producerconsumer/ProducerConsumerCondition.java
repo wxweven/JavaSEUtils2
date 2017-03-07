@@ -45,7 +45,7 @@ public class ProducerConsumerCondition {
      *
      * @return
      */
-    public static boolean hasProduct() {
+    private static boolean hasProduct() {
         return flag;
     }
 

@@ -5,79 +5,79 @@ import org.junit.Test;
 
 /**
  * KMP算法，感谢CSDN的July大神
- * 
+ *
  * @author wxweven
  * @date 2015年9月15日
  * @version 1.0
- * @email wxweven@163.com
- * @blog http://wxweven.blog.163.com/
+ * @email wxweven@qq.com
+ * @blog http://wxweven.win
  * @Copyright: Copyright (c) wxweven 2014
  * @Description:
  */
 public class KMPSearchTest {
 
-	private int[] next;
-	
-	@Test
-	public void testKMP() throws Exception {
-		String str = "acdbdes";
-		String pStr = "bded";
-		
-		next = new int[pStr.length()];
-		getNext(pStr.toCharArray());
-		int index = kmpSearch(str.toCharArray(), pStr.toCharArray());
-		System.out.println(index);
-		
-	}
+    private int[] next;
 
-	private int kmpSearch(char[] str, char[] pStr) {
-		Assert.assertNotNull(str);
-		Assert.assertNotNull(pStr);
+    @Test
+    public void testKMP() throws Exception {
+        String str = "acdbdes";
+        String pStr = "bded";
 
-		int i = 0;
-		int j = 0;
-		int oLen = str.length;
-		int pLen = pStr.length;
+        next = new int[pStr.length()];
+        getNext(pStr.toCharArray());
+        int index = kmpSearch(str.toCharArray(), pStr.toCharArray());
+        System.out.println(index);
 
-		while (i < oLen && j < pLen) {
-			if (j == -1 || str[i] == pStr[j]) {
-				++i;
-				++j;
+    }
 
-			} else {
-				j = next[j];
-			}
-		}
+    private int kmpSearch(char[] str, char[] pStr) {
+        Assert.assertNotNull(str);
+        Assert.assertNotNull(pStr);
 
-		if (j == pLen) {
-			return i - j;
-		}
+        int i = 0;
+        int j = 0;
+        int oLen = str.length;
+        int pLen = pStr.length;
 
-		return -1;
-	}
+        while (i < oLen && j < pLen) {
+            if (j == -1 || str[i] == pStr[j]) {
+                ++i;
+                ++j;
 
-	private void getNext(char[] pStr) {
-		Assert.assertNotNull(pStr);
-		int pLen = pStr.length;
+            } else {
+                j = next[j];
+            }
+        }
 
-		int k = -1;
-		int j = 0;
-		next[0] = -1;
+        if (j == pLen) {
+            return i - j;
+        }
 
-		while (j < pLen - 1) {
-			if (k == -1 || pStr[j] == pStr[k]) {
-				++j;
-				++k;
-				if (pStr[j] != pStr[k]) {
-					next[j] = k;
-				} else {
-					next[j] = next[k];
-				}
-			} else {
-				k = next[k];
-			}
-		}
-		
-		
-	}
+        return -1;
+    }
+
+    private void getNext(char[] pStr) {
+        Assert.assertNotNull(pStr);
+        int pLen = pStr.length;
+
+        int k = -1;
+        int j = 0;
+        next[0] = -1;
+
+        while (j < pLen - 1) {
+            if (k == -1 || pStr[j] == pStr[k]) {
+                ++j;
+                ++k;
+                if (pStr[j] != pStr[k]) {
+                    next[j] = k;
+                } else {
+                    next[j] = next[k];
+                }
+            } else {
+                k = next[k];
+            }
+        }
+
+
+    }
 }
