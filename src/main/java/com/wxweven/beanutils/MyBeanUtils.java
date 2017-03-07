@@ -13,13 +13,12 @@ import org.apache.commons.collections.comparators.NullComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
 /**
- * JavaBean 按照字段排序
- *
+ * 封装BeanUtils功能，包括按照属性排序等
  * @author wxweven
  * @date 2017年3月7日
  * @version 1.0
  * @email wxweven@qq.com
- * @blog wxweven.com
+ * @blog http://wxweven.win
  * @Copyright: Copyright (c) wxweven 2009 - 2017
  */
 public class MyBeanUtils {

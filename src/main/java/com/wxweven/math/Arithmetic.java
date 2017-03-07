@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * @date 2017年3月7日
  * @version 1.0
  * @email wxweven@qq.com
- * @blog wxweven.com
+ * @blog http://wxweven.win
  * @Copyright: Copyright (c) wxweven 2009 - 2017
  */
 public class Arithmetic {
