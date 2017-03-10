@@ -17,11 +17,11 @@ public class BinarySearch {
     private static Logger logger = LoggerFactory.getLogger(BinarySearch.class);
 
     public static void main(String[] args) {
-        int[] arr = { 10, 55, 69, 78, 85 };
+        int[] arr = {10, 55, 69, 78, 85};
         int x = 101;
         int pos = binarySearch(arr, 0, arr.length - 1, x);
 
-        String res = pos == -1 ? "未找到元素": "找到元素，下标为" + pos;
+        String res = pos == -1 ? "未找到元素" : "找到元素，下标为" + pos;
         logger.debug(res);
     }
 

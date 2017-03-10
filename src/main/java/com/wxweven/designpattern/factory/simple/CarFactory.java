@@ -13,15 +13,15 @@ package com.wxweven.designpattern.factory.simple;
 public class CarFactory {
     private static ICar car = null;
 
-    public static ICar getCar(String carName) {
-        switch (carName) {
-        case "benz":
+    public static ICar getCar(CarEnum carEnum) {
+        switch (carEnum) {
+        case BENZ:
             car = new BenzCar();
             break;
-        case "bmw":
+        case BWM:
             car = new BMWCar();
             break;
-        case "landRover":
+        case LANDROVER:
             car = new LandRoverCar();
             break;
         default:

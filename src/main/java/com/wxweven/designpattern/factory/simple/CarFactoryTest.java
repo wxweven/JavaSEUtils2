@@ -17,17 +17,17 @@ public class CarFactoryTest {
     private static Logger logger = LoggerFactory.getLogger(CarFactoryTest.class);
 
     public static void main(String[] args) {
-        ICar myCar = CarFactory.getCar("benz");
+        ICar myCar = CarFactory.getCar(CarEnum.BENZ);
         logger.debug("我的车：" + myCar.getName());
         myCar.drive();
 
         logger.debug("今天高兴，换量车开吧...");
-        myCar = CarFactory.getCar("bmw");
+        myCar = CarFactory.getCar(CarEnum.BWM);
         logger.debug("我的车：" + myCar.getName());
         myCar.drive();
 
         logger.debug("今天要爬山，换量越野车吧...");
-        myCar = CarFactory.getCar("landRover");
+        myCar = CarFactory.getCar(CarEnum.LANDROVER);
         logger.debug("我的车：" + myCar.getName());
         myCar.drive();
     }
