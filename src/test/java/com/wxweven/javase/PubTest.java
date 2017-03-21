@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
-import com.wxweven.beanutils.MyBeanUtils;
 import com.wxweven.data.User;
 import com.wxweven.math.Arithmetic;
 

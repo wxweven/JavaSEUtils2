@@ -1,8 +1,9 @@
 /**
- * 
+ *
  */
 package com.wxweven.thread;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -18,62 +19,73 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class LockTest {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		new LockTest().init();
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        new LockTest().init();
 
-	}
+    }
 
-	private void init() {
-		final Outputer outputer = new Outputer();
+    private void init() {
+        final Outputer outputer = new Outputer();
 
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					outputer.output("aaaaaaaa");
-				}
+        // jdk1.7 and before
+        //        new Thread(new Runnable() {
+        //            @Override
+        //            public void run() {
+        //                while (true) {
+        //                    try {
+        //                        Thread.sleep(10);
+        //                    } catch (InterruptedException e) {
+        //                        e.printStackTrace();
+        //                    }
+        //                    outputer.output("aaaaaaaa");
+        //                }
+        //
+        //            }
+        //        }).start();
 
-			}
-		}).start();
+        // jdk1.8
+        new Thread(() -> {
+            while (true) {
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					outputer.output("bbbbbbbb");
-				}
+                outputer.output("aaaaaaaa");
+            }
 
-			}
-		}).start();
-	}
+        }).start();
 
-	class Outputer {
-		Lock lock = new ReentrantLock();
+        new Thread(() -> {
+            while (true) {
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                outputer.output("bbbbbbbb");
+            }
+        }).start();
+    }
 
-		public void output(String name) {
-			int len = name.length();
-			 lock.lock();
-			try {
-				for (int i = 0; i < len; i++) {
-					System.out.print(name.charAt(i));
-				}
-				System.out.println();
-			} finally {
-				 lock.unlock();
-			}
-		}
-	}
+    class Outputer {
+        Lock lock = new ReentrantLock();
+
+        public void output(String name) {
+            int len = name.length();
+            lock.lock();
+            try {
+                for (int i = 0; i < len; i++) {
+                    System.out.print(name.charAt(i));
+                }
+                System.out.println();
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
 }
