@@ -1,12 +1,8 @@
 package com.wxweven.javase;
 
-import java.util.List;
-
+import com.wxweven.math.Arithmetic;
 import org.apache.log4j.Logger;
 import org.junit.Test;
-
-import com.wxweven.data.User;
-import com.wxweven.math.Arithmetic;
 
 /**
  * beansort测试
@@ -20,19 +16,6 @@ import com.wxweven.math.Arithmetic;
  */
 public class PubTest {
     private static Logger logger = Logger.getLogger(PubTest.class);
-
-    @Test
-    public void testBeanSort() throws Exception {
-        List<User> users = User.getUserList(2);
-        User user = new User();
-        user.setId(10);
-        user.setMarks(50);
-        users.add(user);
-
-        users = MyBeanUtils.sort(users, "name", "desc");
-
-        logger.debug(users);
-    }
 
     @Test
     public void testArithmetic() throws Exception {

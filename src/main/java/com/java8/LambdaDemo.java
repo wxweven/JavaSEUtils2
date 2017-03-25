@@ -26,7 +26,7 @@ public class LambdaDemo {
         List<String> l = Stream.of("a","b","c","b")
                                .distinct()
                                .collect(Collectors.toList());
-        System.out.println(l); //[a, b, c]
+        System.out.println(l);
 
     }
 }

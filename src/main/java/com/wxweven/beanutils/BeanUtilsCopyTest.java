@@ -17,5 +17,10 @@ public class BeanUtilsCopyTest {
         BeanUtils.copyProperties(vo, bo);
         logger.debug(bo.toString());
         logger.debug(vo.toString());
+
+//        Integer a = Integer.valueOf(45);
+        Integer a = null;
+        int b = 45;
+        logger.debug("a==b:" + (a == b));
     }
 }
