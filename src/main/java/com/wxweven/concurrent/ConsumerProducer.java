@@ -35,7 +35,6 @@ public class ConsumerProducer {
         // 生产者线程
         ProducerCondition producer = consumerProducer.new ProducerCondition();
         producer.start();
-
     }
 
     /**
