@@ -4,6 +4,7 @@ public class BeanVO {
     private int     id;
     private Integer name;
     private long    pid;
+    private String  info;
 
     public int getId() {
         return id;
@@ -29,12 +30,21 @@ public class BeanVO {
         this.pid = pid;
     }
 
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     @Override
     public String toString() {
         return "BeanVO{" +
                 "id=" + id +
                 ", name=" + name +
                 ", pid=" + pid +
+                ", info='" + info + '\'' +
                 '}';
     }
 }
