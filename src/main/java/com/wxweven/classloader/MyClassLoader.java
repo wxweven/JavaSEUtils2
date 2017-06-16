@@ -58,10 +58,8 @@ public class MyClassLoader extends ClassLoader {
     /**
      * 逐个字节的加密类二进制代码
      *
-     * @param is
-     *            输入流
-     * @param os
-     *            输出流
+     * @param is 输入流
+     * @param os 输出流
      * @throws IOException
      */
     private static void cypher(InputStream is, OutputStream os) throws IOException {

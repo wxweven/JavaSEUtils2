@@ -119,7 +119,7 @@ INSERT INTO `sec_user_role` VALUES ('2', '2', '2');
 DROP TABLE IF EXISTS `wxw_dept`;
 CREATE TABLE `wxw_dept` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `msg` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `age` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -135,7 +135,7 @@ CREATE TABLE `wxw_dept` (
 DROP TABLE IF EXISTS `wxw_menu`;
 CREATE TABLE `wxw_menu` (
   `id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `msg` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `icon` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `level` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,

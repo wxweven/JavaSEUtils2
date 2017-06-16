@@ -3,7 +3,7 @@ package com.wxweven.string;
 public class StringTest {
 
     public static void main(String[] args) {
-         String a = "hello";
+        String a = "hello";
         String b = "hello2";
         String e = "hello" + 2;
         String c = a + 2;
@@ -20,8 +20,6 @@ public class StringTest {
 //        Integer age = Integer.valueOf(10);
         Integer age = null;
         String str = null;
-
-
 
 
 //        System.out.println(String.valueOf(age));

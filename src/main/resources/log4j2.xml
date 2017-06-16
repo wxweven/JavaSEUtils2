@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="DEBUG">
     <appenders>
-        <Console name="consolePrint" target="SYSTEM_OUT">
+        <Console msg="consolePrint" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{DEFAULT} [%t] %-5p (%C{1}:%L) - %m%n"/>
         </Console>
     </appenders>
 
     <loggers>
-        <logger name="jmonitorlogstore" level="warn"/>
+        <logger msg="jmonitorlogstore" level="warn"/>
         <root level="INFO" includeLocation="true">
             <appender-ref ref="consolePrint"/>
         </root>

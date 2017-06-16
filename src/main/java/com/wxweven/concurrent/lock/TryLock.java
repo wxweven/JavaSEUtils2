@@ -31,7 +31,7 @@ public class TryLock implements Runnable {
 				if (lock1.tryLock()) {
 					try {
 						if (lock2.tryLock()) {
-							//							System.out.println(Thread.currentThread().getName() + " 得到了lock2的锁...");
+							//							System.out.println(Thread.currentThread().getMsg() + " 得到了lock2的锁...");
 						}
 					} finally {
 						if (lock1.isHeldByCurrentThread() && lock2.isHeldByCurrentThread()) {
@@ -48,10 +48,10 @@ public class TryLock implements Runnable {
 		} else {
 			while(true){
 				if (lock2.tryLock()) {
-					//					System.out.println(Thread.currentThread().getName() + " 得到了lock2的锁...");
+					//					System.out.println(Thread.currentThread().getMsg() + " 得到了lock2的锁...");
 					try {
 						if (lock1.tryLock()) {
-							//							System.out.println(Thread.currentThread().getName() + " 得到了lock1的锁...");
+							//							System.out.println(Thread.currentThread().getMsg() + " 得到了lock1的锁...");
 						}
 					} finally {
 						if (lock1.isHeldByCurrentThread() && lock2.isHeldByCurrentThread()) {

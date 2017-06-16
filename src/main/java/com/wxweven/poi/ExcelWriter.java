@@ -16,8 +16,8 @@ import java.util.Map;
 
 /**
  * @author wxweven
- * @date 2014年9月7日
  * @version 1.0
+ * @date 2014年9月7日
  * @email wxweven@163.com
  * @blog http://wxweven.blog.163.com/
  * @Copyright: Copyright (c) wxweven 2014
@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class ExcelWriter {
     public static InputStream getExcelStream(List<String> dataHead, List<String> key,
-            List<Map<String, String>> dataList) throws Exception {
+                                             List<Map<String, String>> dataList) throws Exception {
         int dataHeadSize = dataHead.size();
         int keySize = key.size();
 

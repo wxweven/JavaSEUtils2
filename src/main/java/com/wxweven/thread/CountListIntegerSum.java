@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 /**
  * 计算List中所有整数的和<br>
  * 采用多线程，分割List计算
- * 
+ *
  * @author wxweven
  * @date 2015年3月19日
  * @version 1.0
@@ -31,7 +31,7 @@ public class CountListIntegerSum {
 
 	/**
 	 * 获取List中所有整数的和
-	 * 
+	 *
 	 * @return
 	 */
 	public long getIntegerSum() {
@@ -65,9 +65,9 @@ public class CountListIntegerSum {
 
 	/**
 	 * 分割计算List整数和的线程任务
-	 * 
+	 *
 	 * @author lishuai
-	 * 
+	 *
 	 */
 	public class SubIntegerSumTask implements Runnable {
 		private final List<Integer> subList;
@@ -97,7 +97,7 @@ public class CountListIntegerSum {
 			} catch (BrokenBarrierException e) {
 				System.out.println(Thread.currentThread().getName() + ":BrokenBarrier");
 			}
-//			System.out.println("分配给线程：" + Thread.currentThread().getName() + "那一部分List的整数和为：\tSubSum:"
+//			System.out.println("分配给线程：" + Thread.currentThread().getMsg() + "那一部分List的整数和为：\tSubSum:"
 //					+ subSum);
 		}
 

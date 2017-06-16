@@ -8,11 +8,11 @@ public class ClassLoaderTest {
     public static void main(String[] args) throws Exception {
         /*
          * System.out.println(
-         * ClassLoaderTest.class.getClassLoader().getClass().getName() );
+         * ClassLoaderTest.class.getClassLoader().getClass().getMsg() );
          * System.out.println( System.class.getClassLoader() );
          * System.out.println("xxx"); ClassLoader loader =
          * ClassLoaderTest.class.getClassLoader(); while(loader != null){
-         * System.out.println(loader.getClass().getName()); loader =
+         * System.out.println(loader.getClass().getMsg()); loader =
          * loader.getParent(); } System.out.println(loader);
          */
         // System.out.println(new ClassLoaderAttachment().toString());
