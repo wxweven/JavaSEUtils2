@@ -7,8 +7,11 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DateTimeTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DateTimeTest.class);
 
     @Test
     public void testDaysBetween() {
@@ -19,7 +22,7 @@ public class DateTimeTest {
         Assert.assertEquals(DateUtils.isSameDay(d1.toDate(), d2.toDate()), true);
 
         int days = Days.daysBetween(d1, d2).getDays();
-        System.out.println(days);
+        LOGGER.info("days: {}", days);
     }
 
 }
