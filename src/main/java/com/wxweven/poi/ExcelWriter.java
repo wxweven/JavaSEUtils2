@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class ExcelWriter {
     public static InputStream getExcelStream(List<String> dataHead, List<String> key,
-                                             List<Map<String, String>> dataList) throws Exception {
+                                             List<Map<String, Object>> dataList) throws Exception {
         int dataHeadSize = dataHead.size();
         int keySize = key.size();
 
@@ -65,14 +65,18 @@ public class ExcelWriter {
             row = sheet.createRow(rowindex);//创建行
             row.setHeight((short) 500);// 设定行的高度
 
-            Map<String, String> rowData = dataList.get(rowindex - 1);//拿到当前行对应的数据map
+            Map<String, Object> rowData = dataList.get(rowindex - 1);//拿到当前行对应的数据map
             for (int cellIndex = 0; cellIndex < keySize; cellIndex++) {
                 //循环创建列
                 cell = row.createCell(cellIndex);// 创建一个Excel的单元格
                 // cell.setCellStyle(normalStyle);
                 String cellKey = key.get(cellIndex);
-                String cellValue = rowData.get(cellKey);
-                cell.setCellValue(cellValue);
+                Object cellValue = rowData.get(cellKey);
+                if (cellValue instanceof Number) {
+                    cell.setCellValue(Double.valueOf(String.valueOf(cellValue)));
+                } else {
+                    cell.setCellValue(String.valueOf(cellValue));
+                }
             }
         }
 

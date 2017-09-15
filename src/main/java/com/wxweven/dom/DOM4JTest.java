@@ -54,13 +54,13 @@ public class DOM4JTest {
                 key.add(i + "");
             }
 
-            List<Map<String, String>> dataList = new ArrayList<>(30 * 1000);
+            List<Map<String, Object>> dataList = new ArrayList<>(30 * 1000);
 
             for (Iterator iterator = measurementEle.elementIterator(); iterator.hasNext();) {
                 Element element = (Element) iterator.next();
                 if ("object".equals(element.getName())) {
                     for (Iterator vIt = element.elementIterator(); vIt.hasNext();) {
-                        Map<String, String> map = new HashMap<>(32);
+                        Map<String, Object> map = new HashMap<>(32);
                         Element vEle = (Element) vIt.next();
                         String v = vEle.getText();
                         List<String> vList = Arrays.asList(v.split("\\s+"));

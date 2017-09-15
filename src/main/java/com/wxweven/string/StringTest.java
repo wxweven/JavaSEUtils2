@@ -1,5 +1,7 @@
 package com.wxweven.string;
 
+import org.junit.Test;
+
 public class StringTest {
 
     public static void main(String[] args) {
@@ -24,6 +26,13 @@ public class StringTest {
 
 //        System.out.println(String.valueOf(age));
 //        System.out.println(Integer.valueOf(str));
+
+        System.out.println(StringTest.class.getName());
+
+    }
+
+    @Test
+    public void test() {
 
     }
 }
