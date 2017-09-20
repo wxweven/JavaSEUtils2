@@ -149,5 +149,4 @@ public class CompletableFutureTest {
         System.out.println(f.get());
     }
 
-
 }
