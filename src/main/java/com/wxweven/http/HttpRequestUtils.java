@@ -8,6 +8,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
@@ -104,6 +106,33 @@ public class HttpRequestUtils {
                 } else {
                     LOGGER.error("返回异常：statusCode:{}", statusCode);
                 }
+            }
+        }
+    }
+
+    public static void postBody(String url, String json) throws IOException {
+        //String url = "http://127.0.0.1:8099/login";
+        //String json = "{\"login_name\": \"18800000000\",\"login_password\": \"123456\"}";
+        //创建client
+        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+            //创建post请求
+            HttpPost httppost = new HttpPost(url);
+            //json
+            StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
+            httppost.setEntity(entity);
+            LOGGER.info("请求URL={}" + httppost.getRequestLine());
+            //执行post请求
+            try (CloseableHttpResponse response = httpclient.execute(httppost)) {
+                LOGGER.info("----------------------------------------");
+                //状态
+                LOGGER.info("响应={}", response.getStatusLine());
+                //响应实体
+                HttpEntity resEntity = response.getEntity();
+                if (resEntity != null) {
+                    System.out.println(EntityUtils.toString(resEntity));
+                }
+                //关闭HttpEntity流
+                EntityUtils.consume(resEntity);
             }
         }
     }

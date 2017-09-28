@@ -27,14 +27,22 @@ public class StreamTest {
         List<Person> persons = listPersons();
 
         // 按照city来分组
+        Map<String, List<Person>> personMaps = persons.stream()
+                                                      .collect(Collectors.groupingBy(Person::getCity));
+        System.out.println("按城市分组后：" + personMaps);
 
-        Map<String, Person> personMap = persons.stream()
-                                               .collect(Collectors.toMap(
-                                                       Person::getCity,
-                                                       Function.identity(),
-                                                       (v1, v2) -> v2)
-                                               );
-        System.out.println("按城市分组后：" + personMap);
+        Map<String, Long> nums = persons.stream()
+                                        .collect(Collectors.groupingBy(Person::getCity, Collectors.counting()));
+        System.out.println("每个城市的人数：" + nums);
+
+        Map<String, Person> cityMap = persons.stream()
+                                             .collect(Collectors.toMap(
+                                                     Person::getCity,
+                                                     Function.identity(),
+                                                     (v1, v2) -> v2
+                                             ));
+        System.out.println("city map：" + cityMap);
+
     }
 
     private List<Person> listPersons() {
@@ -48,7 +56,7 @@ public class StreamTest {
         p = new Person("meixiaoxi", "足球员", "basailuona");
         persons.add(p);
 
-        p = new Person("meidaxi", "教师", "hangzhou");
+        p = new Person("meidaxi", "教师", "beijing");
         persons.add(p);
 
         return persons;
